@@ -1,5 +1,14 @@
+# Use an OpenJDK 17 image as the base image
 FROM eclipse-temurin:17-jdk-alpine
+
+# Set the working directory in the container
 WORKDIR /app
-COPY target/springboot-example.jar springboot-example.jar
+
+# Copy the built Spring Boot jar file into the container
+COPY target/appointment-scheduling-service.jar appointment-scheduling-service.jar
+
+# Expose port 8080
 EXPOSE 8080
-CMD ["java","-jar","springboot-example.jar"]
+
+# Command to run the Spring Boot application
+CMD ["java", "-jar", "appointment-scheduling-service.jar"]
