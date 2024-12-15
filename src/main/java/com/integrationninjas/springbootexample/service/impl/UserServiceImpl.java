@@ -1,46 +1,42 @@
-package com.integrationninjas.springbootexample.service.impl;
+package com.integrationninjas.springbootexample.service;
 
-import com.integrationninjas.springbootexample.dao.UserDao;
-import com.integrationninjas.springbootexample.dto.UserDto;
-import com.integrationninjas.springbootexample.entity.User;
-import com.integrationninjas.springbootexample.service.UserService;
+import com.integrationninjas.springbootexample.dao.PatientDao;
+import com.integrationninjas.springbootexample.dto.PatientDto;
+import com.integrationninjas.springbootexample.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class PatientServiceImpl implements PatientService {
 
     @Autowired
-    UserDao userDao;
+    private PatientDao patientDao;
 
     @Override
-    public String createUser(UserDto userDto) {
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        userDao.saveAndFlush(user);
-        return "User Added Successfully";
+    public String createPatient(PatientDto patientDto) {
+        try {
+            Patient patient = new Patient();
+            patient.setFirstName(patientDto.getFirstName());
+            patient.setLastName(patientDto.getLastName());
+            patient.setEmail(patientDto.getEmail());
+            patient.setMedicalHistory(patientDto.getMedicalHistory());
+            patient.setPrescriptions(patientDto.getPrescriptions());
+
+            patientDao.save(patient);
+            return "Patient created successfully!";
+        } catch (Exception e) {
+            return "Error while creating patient: " + e.getMessage();
+        }
     }
 
     @Override
-    public List<UserDto> getUsers() {
-        List<User> usersList = userDao.findAll();
-        List<UserDto> dtoList = new ArrayList<>();
-        if (!usersList.isEmpty()) {
-            usersList.forEach(user -> {
-                UserDto dto = new UserDto();
-                dto.setId(user.getId());
-                dto.setFirstName(user.getFirstName());
-                dto.setLastName(user.getLastName());
-                dto.setEmail(user.getEmail());
-                dtoList.add(dto);
-            });
-        }
-        return dtoList;
+    public List<PatientDto> getPatients() {
+        List<Patient> patients = patientDao.findAll();
+        return patients.stream()
+                .map(patient -> new PatientDto(patient.getId(), patient.getFirstName(), patient.getLastName(), patient.getEmail(), patient.getMedicalHistory(), patient.getPrescriptions()))
+                .collect(Collectors.toList());
     }
 }

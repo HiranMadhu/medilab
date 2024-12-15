@@ -1,7 +1,7 @@
 package com.integrationninjas.springbootexample.dao;
 
-import com.integrationninjas.springbootexample.entity.User;
+import com.integrationninjas.springbootexample.entity.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDao extends JpaRepository<User, Long> {
+public interface PatientDao extends JpaRepository<Patient, Long> {
 }

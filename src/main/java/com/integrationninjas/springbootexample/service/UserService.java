@@ -1,13 +1,11 @@
 package com.integrationninjas.springbootexample.service;
 
-import com.integrationninjas.springbootexample.dto.UserDto;
-import com.integrationninjas.springbootexample.entity.User;
-
+import com.integrationninjas.springbootexample.dto.PatientDto;
 import java.util.List;
 
-public interface UserService {
+public interface PatientService {
 
-    String createUser(UserDto userDto);
+    String createPatient(PatientDto patientDto);
 
-    List<UserDto> getUsers();
+    List<PatientDto> getPatients();
 }

@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "patients")
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +27,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private String medicalHistory;
+    private String prescriptions;
 }
