@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-example
+  name: appointment-scheduling-service
   labels:
-    app: springboot-example
+    app: appointment-scheduling-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: springboot-example
+      app: appointment-scheduling-service
   template:
     metadata:
       labels:
-        app: springboot-example
+        app: appointment-scheduling-service
     spec:
       containers:
-      - name: springboot-example
-        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/springboot-example:${IMAGE_TAG}
+      - name: appointment-scheduling-service
+        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/appointment-scheduling-service:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: springboot-example-service
+  name: appointment-scheduling-service
 spec:
   selector:
-    app: springboot-example
+    app: appointment-scheduling-service
   ports:
     - protocol: TCP
       port: 80
