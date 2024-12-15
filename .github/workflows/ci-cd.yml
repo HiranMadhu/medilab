@@ -56,6 +56,6 @@ jobs:
       - name: Deploy to EKS
         run: |
           # Replace image tag in deployment.yaml
-          sed -i "s|\${IMAGE_TAG}|${{ github.sha }}|g" appointment-scheduling-service/deploy.yaml
-          kubectl apply -f appointment-scheduling-service/deploy.yaml --validate=false
-          kubectl apply -f appointment-scheduling-service/service.yaml
+          sed -i "s|\${IMAGE_TAG}|${{ github.sha }}|g" ./deploy.yaml
+          kubectl apply -f ./deploy.yaml --validate=false
+          kubectl apply -f ./service.yaml
