@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-example
+  name: notification-service
   labels:
-    app: springboot-example
+    app: notification-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: springboot-example
+      app: notification-service
   template:
     metadata:
       labels:
-        app: springboot-example
+        app: notification-service
     spec:
       containers:
-      - name: springboot-example
-        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/springboot-example:${IMAGE_TAG}
-        imagePullPolicy: Always
+      - name: notification-service
+        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/notification-service:${{ github.sha }}
         ports:
         - containerPort: 8080

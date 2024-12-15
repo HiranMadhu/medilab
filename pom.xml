@@ -58,7 +58,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>springboot-example</finalName>
+		<finalName>notification-service</finalName>
 	</build>
 	
 
