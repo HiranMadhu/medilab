@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-example
+  name: patient-record-service
   labels:
-    app: springboot-example
+    app: patient-record-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: springboot-example
+      app: patient-record-service
   template:
     metadata:
       labels:
-        app: springboot-example
+        app: patient-record-service
     spec:
       containers:
-      - name: springboot-example
-        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/springboot-example:${IMAGE_TAG}
+      - name: patient-record-service
+        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/patient-record-service:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

@@ -58,7 +58,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>springboot-example</finalName>
+		<finalName>patient-record-service</finalName>
 	</build>
 	
 
