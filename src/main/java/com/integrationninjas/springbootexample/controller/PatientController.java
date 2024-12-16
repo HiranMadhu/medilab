@@ -10,27 +10,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/patient")  // Base path for patient-related endpoints
 public class PatientController {
- 
-	@Autowired
-	private PatientService patientService;
 
-	@GetMapping("/users")
-	public ResponseEntity<List<PatientDto>> getPatients() {
-		List<PatientDto> patientsList = patientService.getPatients();
-		return new ResponseEntity<>(patientsList, HttpStatus.OK);
-	}
+    @Autowired
+    private PatientService patientService;
 
-	@PostMapping("/users")
-	public ResponseEntity<String> createPatient(@RequestBody PatientDto patientDto) {
-		try {
-			String status = patientService.createPatient(patientDto);
-			return new ResponseEntity<>(status, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+    
+    @GetMapping("/patients")  
+    public ResponseEntity<List<PatientDto>> getPatients() {
+        List<PatientDto> patientsList = patientService.getPatients();
+        return new ResponseEntity<>(patientsList, HttpStatus.OK);
+    }
+
+    
+    @PostMapping("/patients")  
+    public ResponseEntity<String> createPatient(@RequestBody PatientDto patientDto) {
+        try {
+            String status = patientService.createPatient(patientDto);
+            return new ResponseEntity<>(status, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
