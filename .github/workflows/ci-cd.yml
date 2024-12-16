@@ -4,6 +4,7 @@ on:
     branches:
       - feature/notification-service  # Trigger this pipeline when there's a push to this branch
 
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
