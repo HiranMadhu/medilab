@@ -6,6 +6,11 @@ metadata:
     app: patient-record-service
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1          # Allows one extra pod above the replica count during updates
+      maxUnavailable: 1    # Allows one pod to be unavailable during updates
   selector:
     matchLabels:
       app: patient-record-service
