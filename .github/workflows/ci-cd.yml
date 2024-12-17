@@ -6,8 +6,31 @@ on:
       - feature/appointment-scheduling-service  # Trigger this pipeline when there's a push to this branch
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install dependencies
+        run: mvn install -DskipTests  # Install dependencies without running tests
+
+      - name: Run Unit Tests
+        run: mvn test  # Run unit tests
+
+      - name: Build Project
+        run: mvn clean install  # Build project and run tests (skipTests removed)
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Ensure the deploy job runs after build job successfully completes
 
     steps:
       - name: Checkout source
@@ -22,9 +45,6 @@ jobs:
       - name: Install kubectl
         uses: Azure/setup-kubectl@v4.0.0
         id: install
-
-      - name: Build Project
-        run: mvn clean install -DskipTests
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
