@@ -1,36 +1,64 @@
-package com.integrationninjas.appointmentschedulingservice.service.impl.appointmentserviceimpl;
+package com.integrationninjas.appointmentschedulingservice.service.impl;
 
+import com.integrationninjas.appointmentschedulingservice.dao.AppointmentDao;
+import com.integrationninjas.appointmentschedulingservice.dto.AppointmentDto;
+import com.integrationninjas.appointmentschedulingservice.entity.Appointment;
+import com.integrationninjas.appointmentschedulingservice.service.AppointmentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppointmentServiceTest {
+class AppointmentServiceTest {
 
-    private final AppointmentService appointmentService = new AppointmentService();
+    @Mock
+    private AppointmentDao appointmentDao;
 
-    @Test
-    public void testScheduleAppointmentSuccess() {
-        // Arrange
-        String patientName = "John Doe";
-        String doctorName = "Dr. Smith";
-        String time = "2024-12-20 10:00 AM";
+    @InjectMocks
+    private AppointmentServiceImpl appointmentService;
 
-        // Act
-        boolean result = appointmentService.scheduleAppointment(patientName, doctorName, time);
-
-        // Assert
-        assertTrue(result, "Appointment should be scheduled successfully.");
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this); // Initialize mocks
     }
 
     @Test
-    public void testScheduleAppointmentWithNullData() {
-        // Arrange
-        String patientName = null;
-        String doctorName = "Dr. Smith";
-        String time = "2024-12-20 10:00 AM";
+    void testBookAppointment() {
+        AppointmentDto appointmentDto = new AppointmentDto();
+        appointmentDto.setPatientName("John Doe");
+        appointmentDto.setDoctorName("Dr. Smith");
+        // Convert String to LocalDateTime
+        appointmentDto.setAppointmentTime(LocalDateTime.parse("2024-12-17T10:00:00"));
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class, 
-            () -> appointmentService.scheduleAppointment(patientName, doctorName, time),
-            "Exception should be thrown for invalid input");
+        String result = appointmentService.bookAppointment(appointmentDto);
+
+        assertEquals("Appointment booked successfully!", result);
+        verify(appointmentDao, times(1)).save(any(Appointment.class)); // Verify save was called
+    }
+
+    @Test
+    void testGetAllAppointments() {
+        Appointment appointment = new Appointment();
+        appointment.setId(1L);
+        appointment.setPatientName("John Doe");
+        appointment.setDoctorName("Dr. Smith");
+        // Convert String to LocalDateTime
+        appointment.setAppointmentTime(LocalDateTime.parse("2024-12-17T10:00:00"));
+
+        when(appointmentDao.findAll()).thenReturn(List.of(appointment));
+
+        List<AppointmentDto> appointments = appointmentService.getAllAppointments();
+
+        assertNotNull(appointments);
+        assertEquals(1, appointments.size());
+        assertEquals("John Doe", appointments.get(0).getPatientName());
+        assertEquals("Dr. Smith", appointments.get(0).getDoctorName());
     }
 }
