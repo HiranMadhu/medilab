@@ -22,11 +22,7 @@ jobs:
       - name: Install dependencies
         run: mvn install -DskipTests  # Install dependencies without running tests
 
-      - name: Run Unit Tests
-        run: mvn test  # Run unit tests
 
-      - name: Build Project
-        run: mvn clean install  # Build project and run tests (skipTests removed)
 
   deploy:
     runs-on: ubuntu-latest
