@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: appointment-scheduling-service
-        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/appointment-scheduling-service:${IMAGE_TAG}
+        image: 891612584112.dkr.ecr.us-east-2.amazonaws.com/appointment-scheduling-service2:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
