@@ -1,47 +1,37 @@
 name: Deploy AppointmentSchedulingService to AWS ECS
-
 on:
   push:
     branches:
-      - feature/appointment-scheduling-service  # Trigger this pipeline when there's a push to this branch
-
+      - feature/appointment-scheduling-service  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-
       - name: Install kubectl
         uses: Azure/setup-kubectl@v4.0.0
         id: install
-
       - name: Build Project
         run: mvn clean install -DskipTests
-
       - name: Run Tests
         run: mvn test  # Run tests here
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1'
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: 'true'
-
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -54,8 +44,7 @@ jobs:
             echo "image=$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Update kube config
-        run: aws eks update-kubeconfig --name medilab-cluster
-
+        run: aws eks update-kubeconfig --name medilabCluster2
       - name: Deploy to EKS
         run: |
           # Replace image tag in deployment.yaml

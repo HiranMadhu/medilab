@@ -9,8 +9,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1          # Allows one extra pod above the replica count during updates
-      maxUnavailable: 1    # Allows one pod to be unavailable during updates
+      maxSurge: 1          
+      maxUnavailable: 1    
   selector:
     matchLabels:
       app: appointment-scheduling-service
