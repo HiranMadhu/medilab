@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: appointment-scheduling-service2
+  name: appointment-scheduling-service
   labels:
-    app: appointment-scheduling-service2
+    app: appointment-scheduling-service
 spec:
   replicas: 1
   strategy:
@@ -13,15 +13,15 @@ spec:
       maxUnavailable: 1    
   selector:
     matchLabels:
-      app: appointment-scheduling-service2
+      app: appointment-scheduling-service
   template:
     metadata:
       labels:
-        app: appointment-scheduling-service2
+        app: appointment-scheduling-service
     spec:
       containers:
-      - name: appointment-scheduling-service2
-        image: 891612584112.dkr.ecr.us-east-2.amazonaws.com/appointment-scheduling-service2:${IMAGE_TAG}
+      - name: appointment-scheduling-service
+        image: 891612584112.dkr.ecr.us-east-1.amazonaws.com/appointment-scheduling-service:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
